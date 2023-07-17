@@ -4,13 +4,13 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.Objects;
 
-import static org.apache.commons.lang3.StringUtils.*;
+
 
 public class Question {
 
     private final String question;
 
-    private final String answer;
+    private String answer;
 
     public Question(String question, String answer) {
         this.question = question;
@@ -19,7 +19,7 @@ public class Question {
 
     public Question(String question) {
         this.question = question;
-        this.answer=null;
+
     }
 
     public String getQuestion() {
@@ -52,3 +52,13 @@ public class Question {
                 '}';
     }
 }
+
+
+
+
+
+
+
+
+
+

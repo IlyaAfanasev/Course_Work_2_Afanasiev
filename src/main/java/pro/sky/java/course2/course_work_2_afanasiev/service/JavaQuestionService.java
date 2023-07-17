@@ -1,13 +1,15 @@
 package pro.sky.java.course2.course_work_2_afanasiev.service;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Repository;
 import pro.sky.java.course2.course_work_2_afanasiev.exceptions.ParamIsNullException;
 import pro.sky.java.course2.course_work_2_afanasiev.exceptions.QuestionAlreadyExist;
 import pro.sky.java.course2.course_work_2_afanasiev.exceptions.QuestionNotFound;
+import pro.sky.java.course2.course_work_2_afanasiev.exceptions.RequestMoreContentExceptions;
 import pro.sky.java.course2.course_work_2_afanasiev.model.Question;
 
 import java.util.*;
-
+@Repository
 public class JavaQuestionService implements QuestionService {
 
     private final Map<String, Question> questions;
@@ -56,13 +58,16 @@ public class JavaQuestionService implements QuestionService {
     }
 
     @Override
-    public List<Question> getRandomQuestion(int quantity) {
-        Question [] questions1 = getAll().toArray(new Question[0]);
+    public Set <Question> getRandomQuestion(int quantity) {
+        if (quantity > questions.size()) {
+            throw new RequestMoreContentExceptions();
+        }
+        Question [] questionsCopy = getAll().toArray(new Question[0]);
         Random random = new Random();
-        List <Question> returnQuestions = new ArrayList<>();
-        for (int i = 1; i <= quantity; i++) {
-            int j = random.nextInt(questions1.length);
-            returnQuestions.add(questions1[j]);
+        Set <Question> returnQuestions = new HashSet<>();
+        while (returnQuestions.size()< quantity) {
+            int i = random.nextInt(questionsCopy.length);
+            returnQuestions.add(questionsCopy[i]);
         }
 
         return returnQuestions;
@@ -91,4 +96,7 @@ public class JavaQuestionService implements QuestionService {
 
         }
 }
+
+
+
 
