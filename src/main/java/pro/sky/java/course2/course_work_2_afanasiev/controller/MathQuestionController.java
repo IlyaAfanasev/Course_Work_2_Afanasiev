@@ -9,13 +9,12 @@ import pro.sky.java.course2.course_work_2_afanasiev.model.Question;
 import pro.sky.java.course2.course_work_2_afanasiev.service.QuestionService;
 
 import java.util.Collection;
-
 @RestController
-@RequestMapping("/exam/java")
-public class JavaQuestionController {
+@RequestMapping("/exam/math")
+public class MathQuestionController {
     private final QuestionService questionService;
 
-    public JavaQuestionController(@Qualifier("javaQuestionService") QuestionService questionService) {
+    public MathQuestionController(@Qualifier("mathQuestionService") QuestionService questionService) {
         this.questionService = questionService;
 
     }
@@ -34,10 +33,4 @@ public class JavaQuestionController {
     public Collection<Question> getAll() {
         return questionService.getAll();
     }
-
-
-
-
-
-
 }

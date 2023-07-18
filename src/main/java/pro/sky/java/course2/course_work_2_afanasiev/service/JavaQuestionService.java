@@ -1,100 +1,67 @@
 package pro.sky.java.course2.course_work_2_afanasiev.service;
 
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Repository;
-import pro.sky.java.course2.course_work_2_afanasiev.exceptions.ParamIsNullException;
-import pro.sky.java.course2.course_work_2_afanasiev.exceptions.QuestionAlreadyExist;
-import pro.sky.java.course2.course_work_2_afanasiev.exceptions.QuestionNotFound;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 import pro.sky.java.course2.course_work_2_afanasiev.exceptions.RequestMoreContentExceptions;
 import pro.sky.java.course2.course_work_2_afanasiev.model.Question;
+import pro.sky.java.course2.course_work_2_afanasiev.repository.QuestionRepository;
 
 import java.util.*;
-@Repository
+
+@Service("javaQuestionService")
 public class JavaQuestionService implements QuestionService {
 
-    private final Map<String, Question> questions;
 
-    public JavaQuestionService() {
+    private final QuestionRepository questionRepository;
 
-        this.questions = new HashMap<>();
+
+    public JavaQuestionService(@Qualifier("javaQuestionRepository") QuestionRepository questionRepository) {
+
+        this.questionRepository = questionRepository;
+
     }
     @Override
     public Question add(String question, String answer) {
-        checkParam(question);
-        reformatParam(question);
-        equalsQuestion(question);
-        checkParam(answer);
-        reformatParam(answer);
-        Question q = new Question(question, answer);
-        questions.put(question,q);
-        return q;
+        return questionRepository.add(question, answer);
     }
 
     @Override
     public Question add(String question) {
-        checkParam(question);
-        equalsQuestion(question);
-        reformatParam(question);
-        Question q = new Question(question);
-        questions.put(question, q);
-        return q;
+        return questionRepository.add(question);
     }
 
     @Override
     public Question remove(String question) {
-        checkParam(question);
-        reformatParam(question);
-        if (!questions.containsKey(question)) {
-            throw new QuestionNotFound();
-        }
-
-        return questions.remove(question);
+        return questionRepository.remove(question);
     }
 
     @Override
     public Collection<Question> getAll() {
 
-        return new ArrayList<>(questions.values());
+        return questionRepository.getAll();
     }
 
     @Override
     public Set <Question> getRandomQuestion(int quantity) {
-        if (quantity > questions.size()) {
+        List <Question> questionsCopy = List.of(questionRepository.getAll().toArray(new Question[0]));
+
+        if (quantity > questionsCopy.size()) {
             throw new RequestMoreContentExceptions();
         }
-        Question [] questionsCopy = getAll().toArray(new Question[0]);
+        if (quantity == questionsCopy.size()) {
+            return  new HashSet<>(questionsCopy);
+        }
+
         Random random = new Random();
         Set <Question> returnQuestions = new HashSet<>();
         while (returnQuestions.size()< quantity) {
-            int i = random.nextInt(questionsCopy.length);
-            returnQuestions.add(questionsCopy[i]);
+            int i = random.nextInt(questionsCopy.size());
+            returnQuestions.add(questionsCopy.get(i));
         }
 
         return returnQuestions;
     }
 
-    private void checkParam(String param) {
-        if (param == null) {
-            throw new ParamIsNullException();
-        }
-    }
-
-    private void reformatParam(String param) {
-        StringUtils.strip(param);
-        StringUtils.lowerCase(param);
-        StringUtils.capitalize(param);
-
-    }
-
-    private void equalsQuestion(String question) {
-        Question q = new Question(question);
-        for (Question o: questions.values()) {
-            if(o.equals(q))
-                throw new QuestionAlreadyExist();
-
-        }
-
-        }
 }
 
 
