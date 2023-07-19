@@ -9,6 +9,8 @@ import pro.sky.java.course2.course_work_2_afanasiev.model.Question;
 
 import java.util.*;
 
+import static org.apache.commons.lang3.StringUtils.*;
+
 @Repository("javaQuestionRepository")
 public class JavaQuestionRepository implements QuestionRepository {
     private final Map<String, Question> questions;
@@ -64,9 +66,10 @@ public class JavaQuestionRepository implements QuestionRepository {
     }
 
     private void reformatParam(String param) {
-        StringUtils.strip(param);
-        StringUtils.lowerCase(param);
-        StringUtils.capitalize(param);
+        strip(param);
+        lowerCase(param);
+        capitalize(param);
+
 
     }
 
