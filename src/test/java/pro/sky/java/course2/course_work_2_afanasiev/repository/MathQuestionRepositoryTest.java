@@ -1,17 +1,18 @@
 package pro.sky.java.course2.course_work_2_afanasiev.repository;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import pro.sky.java.course2.course_work_2_afanasiev.exceptions.ParamIsNullException;
 import pro.sky.java.course2.course_work_2_afanasiev.exceptions.QuestionAlreadyExist;
 import pro.sky.java.course2.course_work_2_afanasiev.exceptions.QuestionNotFound;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static pro.sky.java.course2.course_work_2_afanasiev.constant.QuestionRepositoryConstant.*;
+import static pro.sky.java.course2.course_work_2_afanasiev.constant.QuestionRepositoryConstant.COLLECTION_JAVA_QUESTIONS;
 
-public class JavaQuestionRepositoryTest {
+public class MathQuestionRepositoryTest {
 
-    private final JavaQuestionRepository out = new JavaQuestionRepository();
+    private final MathQuestionRepository out = new MathQuestionRepository();
 
     @Test
     public void shouldReturnCorrectResultFromMethodAdd() {
@@ -80,17 +81,6 @@ public class JavaQuestionRepositoryTest {
         out.add(JAVA_QUESTION_2_QUESTION, JAVA_QUESTION_2_ANSWER);
         assertEquals(COLLECTION_JAVA_QUESTIONS, out.getAll());
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
+
+

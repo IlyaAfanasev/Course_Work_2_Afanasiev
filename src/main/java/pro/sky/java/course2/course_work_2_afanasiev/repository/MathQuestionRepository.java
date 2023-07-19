@@ -9,6 +9,8 @@ import pro.sky.java.course2.course_work_2_afanasiev.model.Question;
 
 import java.util.*;
 
+import static org.apache.commons.lang3.StringUtils.*;
+
 @Repository("mathQuestionRepository")
 public class MathQuestionRepository implements QuestionRepository {
     private final Map<String, Question> questions;
@@ -20,10 +22,10 @@ public class MathQuestionRepository implements QuestionRepository {
     @Override
     public Question add(String question, String answer) {
         checkParam(question);
-        reformatParam(question);
+        question = reformatParam(question);
         equalsQuestion(question);
         checkParam(answer);
-        reformatParam(answer);
+        answer = reformatParam(answer);
         Question q = new Question(question, answer);
         questions.put(question,q);
         return q;
@@ -32,8 +34,8 @@ public class MathQuestionRepository implements QuestionRepository {
     @Override
     public Question add(String question) {
         checkParam(question);
+        question = reformatParam(question);
         equalsQuestion(question);
-        reformatParam(question);
         Question q = new Question(question);
         questions.put(question, q);
         return q;
@@ -42,7 +44,7 @@ public class MathQuestionRepository implements QuestionRepository {
     @Override
     public Question remove(String question) {
         checkParam(question);
-        reformatParam(question);
+        question = reformatParam(question);
         if (!questions.containsKey(question)) {
             throw new QuestionNotFound();
         }
@@ -64,10 +66,8 @@ public class MathQuestionRepository implements QuestionRepository {
         }
     }
 
-    private void reformatParam(String param) {
-        StringUtils.strip(param);
-        StringUtils.lowerCase(param);
-        StringUtils.capitalize(param);
+    private String reformatParam(String param) {
+        return capitalize(lowerCase(strip(param)));
 
     }
 

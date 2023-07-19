@@ -2,6 +2,10 @@ package pro.sky.java.course2.course_work_2_afanasiev.constant;
 
 import pro.sky.java.course2.course_work_2_afanasiev.model.Question;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 public class QuestionRepositoryConstant {
 
     public static final Question JAVA_QUESTION_1 = new Question("Что такое массив"
@@ -12,9 +16,13 @@ public class QuestionRepositoryConstant {
 
     public static final Question JAVA_QUESTION_2 = new Question("Какие бывают условные операторы",
             "If, Switch");
-    public static final Question JAVA_QUESTION_3 = new Question("Где хранятся переменные",
-            "Примитивы хранятся в стеке, ссылки на ссылочные переменные так же хранятся в стеке, " +
-                    "сами ссылочные  переменные хранятся в куче");
-    public static final Question JAVA_QUESTION_4 = new Question(null);
+
+    public static final String JAVA_QUESTION_2_QUESTION = "Какие бывают условные операторы";
+    public static final String JAVA_QUESTION_2_ANSWER = "If, Switch";
+
+
+    public static final Collection<Question> COLLECTION_JAVA_QUESTIONS = new ArrayList<>(List.of(JAVA_QUESTION_1, JAVA_QUESTION_2));
+
+
 
 }

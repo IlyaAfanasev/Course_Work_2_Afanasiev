@@ -24,7 +24,7 @@ public class JavaQuestionRepository implements QuestionRepository {
         question = reformatParam(question);
         equalsQuestion(question);
         checkParam(answer);
-        reformatParam(answer);
+        answer = reformatParam(answer);
         Question q = new Question(question, answer);
         questions.put(question,q);
         return q;
@@ -33,8 +33,8 @@ public class JavaQuestionRepository implements QuestionRepository {
     @Override
     public Question add(String question) {
         checkParam(question);
+        question = reformatParam(question);
         equalsQuestion(question);
-        reformatParam(question);
         Question q = new Question(question);
         questions.put(question, q);
         return q;
@@ -43,7 +43,7 @@ public class JavaQuestionRepository implements QuestionRepository {
     @Override
     public Question remove(String question) {
         checkParam(question);
-        reformatParam(question);
+        question = reformatParam(question);
         if (!questions.containsKey(question)) {
             throw new QuestionNotFound();
         }
@@ -65,11 +65,8 @@ public class JavaQuestionRepository implements QuestionRepository {
     }
 
     private String reformatParam(String param) {
-        strip(param);
-        lowerCase(param);
-        capitalize(param);
+       return capitalize(lowerCase(strip(param)));
 
-        return param;
     }
 
     private void equalsQuestion(String question) {
