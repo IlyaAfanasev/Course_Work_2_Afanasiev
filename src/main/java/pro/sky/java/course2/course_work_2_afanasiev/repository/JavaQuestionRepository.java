@@ -1,6 +1,5 @@
 package pro.sky.java.course2.course_work_2_afanasiev.repository;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 import pro.sky.java.course2.course_work_2_afanasiev.exceptions.ParamIsNullException;
 import pro.sky.java.course2.course_work_2_afanasiev.exceptions.QuestionAlreadyExist;
@@ -22,7 +21,7 @@ public class JavaQuestionRepository implements QuestionRepository {
     @Override
     public Question add(String question, String answer) {
         checkParam(question);
-        reformatParam(question);
+        question = reformatParam(question);
         equalsQuestion(question);
         checkParam(answer);
         reformatParam(answer);
@@ -65,12 +64,12 @@ public class JavaQuestionRepository implements QuestionRepository {
         }
     }
 
-    private void reformatParam(String param) {
+    private String reformatParam(String param) {
         strip(param);
         lowerCase(param);
         capitalize(param);
 
-
+        return param;
     }
 
     private void equalsQuestion(String question) {
