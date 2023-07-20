@@ -2,9 +2,7 @@ package pro.sky.java.course2.course_work_2_afanasiev.constant;
 
 import pro.sky.java.course2.course_work_2_afanasiev.model.Question;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 public class QuestionRepositoryConstant {
 
@@ -21,8 +19,10 @@ public class QuestionRepositoryConstant {
     public static final String JAVA_QUESTION_2_ANSWER = "If, Switch";
 
 
-    public static final Collection<Question> COLLECTION_JAVA_QUESTIONS = new ArrayList<>(List.of(JAVA_QUESTION_1, JAVA_QUESTION_2));
+    public static final Collection<Question> COLLECTION_JAVA_QUESTIONS
+            = new ArrayList<>(List.of(JAVA_QUESTION_1, JAVA_QUESTION_2));
 
-
+    public static final Set<Question> RANDOM_JAVA_QUESTIONS
+            = new HashSet<>(COLLECTION_JAVA_QUESTIONS);
 
 }
