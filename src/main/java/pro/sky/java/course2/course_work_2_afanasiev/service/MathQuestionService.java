@@ -1,7 +1,10 @@
 package pro.sky.java.course2.course_work_2_afanasiev.service;
 
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.MethodNotAllowedException;
+import pro.sky.java.course2.course_work_2_afanasiev.exceptions.MethodNotExistException;
 import pro.sky.java.course2.course_work_2_afanasiev.exceptions.RequestMoreContentExceptions;
 import pro.sky.java.course2.course_work_2_afanasiev.model.Question;
 import pro.sky.java.course2.course_work_2_afanasiev.repository.QuestionRepository;
@@ -10,34 +13,32 @@ import java.util.*;
 @Service("mathQuestionService")
 public class MathQuestionService implements QuestionService {
 
-        private final QuestionRepository questionRepository;
 
 
 
-        public MathQuestionService(@Qualifier("mathQuestionRepository") QuestionRepository questionRepository) {
-            this.questionRepository = questionRepository;
 
+        public MathQuestionService() {
 
         }
         @Override
         public Question add(String question, String answer) {
-            return questionRepository.add(question, answer);
+            throw new MethodNotExistException();
         }
 
         @Override
         public Question add(String question) {
-            return questionRepository.add(question);
+            throw new MethodNotExistException();
         }
 
         @Override
         public Question remove(String question) {
-            return questionRepository.remove(question);
+            throw new MethodNotExistException();
         }
 
         @Override
         public Collection<Question> getAll() {
 
-            return questionRepository.getAll();
+            throw new MethodNotExistException();
         }
 
         @Override
@@ -62,4 +63,5 @@ public class MathQuestionService implements QuestionService {
         }
 
 
-    }
+
+}
