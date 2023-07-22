@@ -1,25 +1,29 @@
 package pro.sky.java.course2.course_work_2_afanasiev.service;
 
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
-
 import pro.sky.java.course2.course_work_2_afanasiev.exceptions.ParamIsNullException;
 import pro.sky.java.course2.course_work_2_afanasiev.exceptions.QuestionAlreadyExist;
 import pro.sky.java.course2.course_work_2_afanasiev.exceptions.QuestionNotFound;
 import pro.sky.java.course2.course_work_2_afanasiev.exceptions.RequestMoreContentExceptions;
 import pro.sky.java.course2.course_work_2_afanasiev.repository.QuestionRepository;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.isNull;
+import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
 import static pro.sky.java.course2.course_work_2_afanasiev.constant.QuestionRepositoryConstant.*;
+import static pro.sky.java.course2.course_work_2_afanasiev.constant.QuestionRepositoryConstant.COLLECTION_QUESTIONS;
 
 @ExtendWith(MockitoExtension.class)
-public class JavaQuestionServiceTest {
+public class MathQuestionServiceTest {
+
 
     @Mock
 
@@ -27,7 +31,7 @@ public class JavaQuestionServiceTest {
 
     @InjectMocks
 
-    private JavaQuestionService out;
+    private MathQuestionService out;
 
     @Test
     public void shouldReturnCorrectResultFromMethodAdd() {
