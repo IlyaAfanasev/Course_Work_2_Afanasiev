@@ -6,26 +6,26 @@ import org.springframework.stereotype.Service;
 import pro.sky.java.course2.course_work_2_afanasiev.exceptions.RequestMoreContentExceptions;
 import pro.sky.java.course2.course_work_2_afanasiev.model.Question;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class ExaminerServiceImpl implements ExaminerService {
 
-    private final QuestionService javaQuestionService;
-    private final QuestionService mathQuestionService;
+    private Collection <QuestionService> questionServices;
 
 
-    public ExaminerServiceImpl(QuestionService javaQuestionService, QuestionService mathQuestionService) {
-        this.javaQuestionService = javaQuestionService;
-        this.mathQuestionService = mathQuestionService;
+
+    public ExaminerServiceImpl() {
+
+
+        this.questionServices = new HashSet<>();
 
     }
 
     @Override
     public Collection<Question> getQuestions(int amount) {
+        QuestionService javaQuestionService = new JavaQuestionService();
         List<Question> questions;
 
         int javaQuestionsSize = javaQuestionService.getAll().size();
