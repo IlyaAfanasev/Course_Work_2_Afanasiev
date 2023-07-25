@@ -8,6 +8,9 @@ public class CourseWork2AfanasievApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(CourseWork2AfanasievApplication.class, args);
+
+
     }
+
 
 }
