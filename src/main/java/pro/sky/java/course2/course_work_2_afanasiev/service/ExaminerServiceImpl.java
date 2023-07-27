@@ -12,40 +12,34 @@ import java.util.stream.Collectors;
 @Service
 public class ExaminerServiceImpl implements ExaminerService {
 
-    private Collection <QuestionService> questionServices;
+    private final List <QuestionService> questionServices;
 
 
 
-    public ExaminerServiceImpl() {
+    public ExaminerServiceImpl(List <QuestionService> questionServices) {
 
 
-        this.questionServices = new HashSet<>();
+        this.questionServices = questionServices;
 
     }
 
     @Override
     public Collection<Question> getQuestions(int amount) {
-        QuestionService javaQuestionService = new JavaQuestionService();
-        List<Question> questions;
 
-        int javaQuestionsSize = javaQuestionService.getAll().size();
-
-
-
+        Set<Question> randomQuestions = new HashSet<>();
 
         Random random = new Random();
-        int num = random.nextInt(amount + 1);
-        int quantityJavaQuestions = amount - num;
-        int quantityMathQuestions = amount - quantityJavaQuestions;
-        if (quantityJavaQuestions > javaQuestionsSize) {
-            quantityMathQuestions = amount - javaQuestionsSize;
+
+        while (randomQuestions.size() < amount) {
+
+            int questionServiceId = random.nextInt(questionServices.size());
+
+            QuestionService questionService = questionServices.get(questionServiceId);
+
+            randomQuestions.add(questionService.getRandomQuestion());
 
         }
 
-        Iterable<Question> combinedIterables = Iterables.unmodifiableIterable(
-                Iterables.concat(javaQuestionService.getRandomQuestion(quantityJavaQuestions),
-                        mathQuestionService.getRandomQuestion(quantityMathQuestions)));
-
-        return Lists.newArrayList(combinedIterables);
+        return randomQuestions;
     }
 }

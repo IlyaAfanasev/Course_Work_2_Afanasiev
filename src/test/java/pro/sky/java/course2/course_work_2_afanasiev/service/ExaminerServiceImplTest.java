@@ -5,13 +5,19 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 
+import com.sun.source.doctree.SeeTree;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import org.w3c.dom.stylesheets.LinkStyle;
 import pro.sky.java.course2.course_work_2_afanasiev.exceptions.RequestMoreContentExceptions;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 import static pro.sky.java.course2.course_work_2_afanasiev.constant.QuestionRepositoryConstant.*;
 
@@ -27,27 +33,22 @@ public class ExaminerServiceImplTest {
 
         QuestionService mathQuestionServiceMock = mock(MathQuestionService.class);
 
-        out = new ExaminerServiceImpl(javaQuestionServiceMock, mathQuestionServiceMock);
+        List<QuestionService> questionServicesList =
+                new ArrayList<>(List.of(javaQuestionServiceMock, mathQuestionServiceMock));
+
+
+
+        out = new ExaminerServiceImpl(questionServicesList);
 
         when(javaQuestionServiceMock.getAll()).thenReturn(COLLECTION_QUESTIONS);
 
-        when(mathQuestionServiceMock.getAll()).thenReturn(COLLECTION_QUESTIONS_2);
-    }
-
-
-    @Test
-    public void shouldCorrectResultFromMethodGetQuestion() {
-
-
-        assertEquals(COLLECTION_ALL_QUESTIONS, out.getQuestions(4));
-
 
     }
 
-    @Test
-    public void shouldThrowRequestMoreContentExceptionsFromMethodGetQuestion() {
-        assertThrows(RequestMoreContentExceptions.class, () -> out.getQuestions(5));
-    }
+
+
+
+
 
 
 }

@@ -2,21 +2,21 @@ package pro.sky.java.course2.course_work_2_afanasiev.repository;
 
 import org.springframework.stereotype.Repository;
 import pro.sky.java.course2.course_work_2_afanasiev.exceptions.ParamIsNullException;
-import pro.sky.java.course2.course_work_2_afanasiev.exceptions.QuestionAlreadyExist;
-import pro.sky.java.course2.course_work_2_afanasiev.exceptions.QuestionNotFound;
+import pro.sky.java.course2.course_work_2_afanasiev.exceptions.QuestionAlreadyExistException;
+import pro.sky.java.course2.course_work_2_afanasiev.exceptions.QuestionNotFoundException;
 import pro.sky.java.course2.course_work_2_afanasiev.model.Question;
 
 import java.util.*;
 
 import static org.apache.commons.lang3.StringUtils.*;
 
-@Repository("javaQuestionRepository")
+@Repository
 public class JavaQuestionRepository implements QuestionRepository {
-    private final Map<String, Question> questions;
+    private final Set<Question> questions;
 
     public JavaQuestionRepository() {
 
-        this.questions = new HashMap<>();
+        this.questions = new HashSet<>();
     }
     @Override
     public Question add(String question, String answer) {
@@ -26,7 +26,7 @@ public class JavaQuestionRepository implements QuestionRepository {
         checkParam(answer);
         answer = reformatParam(answer);
         Question q = new Question(question, answer);
-        questions.put(question,q);
+        questions.add(q);
         return q;
     }
 
@@ -36,7 +36,7 @@ public class JavaQuestionRepository implements QuestionRepository {
         question = reformatParam(question);
         equalsQuestion(question);
         Question q = new Question(question);
-        questions.put(question, q);
+        questions.add(q);
         return q;
     }
 
@@ -44,17 +44,18 @@ public class JavaQuestionRepository implements QuestionRepository {
     public Question remove(String question) {
         checkParam(question);
         question = reformatParam(question);
-        if (!questions.containsKey(question)) {
-            throw new QuestionNotFound();
+        Question q = new Question(question);
+        if (questions.remove(q)) {
+            return new Question(question);
         }
 
-        return questions.remove(question);
+        throw new QuestionNotFoundException();
     }
 
     @Override
     public Collection<Question> getAll() {
 
-        return new ArrayList<>(questions.values());
+        return questions;
     }
 
 
@@ -71,9 +72,9 @@ public class JavaQuestionRepository implements QuestionRepository {
 
     private void equalsQuestion(String question) {
         Question q = new Question(question);
-        for (Question o: questions.values()) {
+        for (Question o: getAll()) {
             if(o.equals(q))
-                throw new QuestionAlreadyExist();
+                throw new QuestionAlreadyExistException();
 
         }
 

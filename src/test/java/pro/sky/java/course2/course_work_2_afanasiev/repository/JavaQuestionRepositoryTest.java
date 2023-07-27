@@ -2,8 +2,8 @@ package pro.sky.java.course2.course_work_2_afanasiev.repository;
 
 import org.junit.jupiter.api.Test;
 import pro.sky.java.course2.course_work_2_afanasiev.exceptions.ParamIsNullException;
-import pro.sky.java.course2.course_work_2_afanasiev.exceptions.QuestionAlreadyExist;
-import pro.sky.java.course2.course_work_2_afanasiev.exceptions.QuestionNotFound;
+import pro.sky.java.course2.course_work_2_afanasiev.exceptions.QuestionAlreadyExistException;
+import pro.sky.java.course2.course_work_2_afanasiev.exceptions.QuestionNotFoundException;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static pro.sky.java.course2.course_work_2_afanasiev.constant.QuestionRepositoryConstant.*;
@@ -27,8 +27,8 @@ public class JavaQuestionRepositoryTest {
     @Test
     public void shouldThrowQuestionAlreadyExistFromMethodAddWhenElementIsExist() {
         out.add(QUESTION_1_QUESTION, QUESTION_1_ANSWER);
-        assertThrows(QuestionAlreadyExist.class, () -> out.add(" что такое масСив ", QUESTION_1_ANSWER));
-        assertThrows(QuestionAlreadyExist.class, () -> out.add(" что такое масСив "));
+        assertThrows(QuestionAlreadyExistException.class, () -> out.add(" что такое масСив ", QUESTION_1_ANSWER));
+        assertThrows(QuestionAlreadyExistException.class, () -> out.add(" что такое масСив "));
     }
 
 
@@ -46,8 +46,8 @@ public class JavaQuestionRepositoryTest {
     @Test
     public void shouldThrowQuestionAlreadyExistFromMethodAddWithoutParamAnswerWhenElementIsExist() {
         out.add(QUESTION_1_QUESTION);
-        assertThrows(QuestionAlreadyExist.class, () -> out.add(" что такое масСив "));
-        assertThrows(QuestionAlreadyExist.class, () -> out.add(" что такое масСив ", QUESTION_1_ANSWER));
+        assertThrows(QuestionAlreadyExistException.class, () -> out.add(" что такое масСив "));
+        assertThrows(QuestionAlreadyExistException.class, () -> out.add(" что такое масСив ", QUESTION_1_ANSWER));
     }
 
     @Test
@@ -62,7 +62,7 @@ public class JavaQuestionRepositoryTest {
     @Test
 
     public void shouldTrowQuestionNotFoundFromMethodRemove() {
-        assertThrows(QuestionNotFound.class, () -> out.remove(QUESTION_2_QUESTION));
+        assertThrows(QuestionNotFoundException.class, () -> out.remove(QUESTION_2_QUESTION));
     }
 
     @Test

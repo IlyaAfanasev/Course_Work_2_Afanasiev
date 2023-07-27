@@ -1,6 +1,5 @@
 package pro.sky.java.course2.course_work_2_afanasiev.service;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import pro.sky.java.course2.course_work_2_afanasiev.exceptions.RequestMoreContentExceptions;
 import pro.sky.java.course2.course_work_2_afanasiev.model.Question;
@@ -15,7 +14,7 @@ public class JavaQuestionService implements QuestionService {
     private final QuestionRepository questionRepository;
 
 
-    public JavaQuestionService(@Qualifier("javaQuestionRepository") QuestionRepository questionRepository) {
+    public JavaQuestionService( QuestionRepository questionRepository) {
 
         this.questionRepository = questionRepository;
 
@@ -42,24 +41,14 @@ public class JavaQuestionService implements QuestionService {
     }
 
     @Override
-    public Set <Question> getRandomQuestion(int quantity) {
+    public Question getRandomQuestion() {
         List <Question> questionsCopy = List.of(questionRepository.getAll().toArray(new Question[0]));
 
-        if (quantity > questionsCopy.size()) {
-            throw new RequestMoreContentExceptions();
-        }
-        if (quantity == questionsCopy.size()) {
-            return  new HashSet<>(questionsCopy);
-        }
-
         Random random = new Random();
-        Set <Question> returnQuestions = new HashSet<>();
-        while (returnQuestions.size()< quantity) {
-            int i = random.nextInt(questionsCopy.size());
-            returnQuestions.add(questionsCopy.get(i));
-        }
 
-        return returnQuestions;
+        int i = random.nextInt(questionsCopy.size());
+
+        return questionsCopy.get(i);
     }
 
 }

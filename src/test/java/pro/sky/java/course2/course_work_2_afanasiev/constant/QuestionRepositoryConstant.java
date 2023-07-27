@@ -31,7 +31,7 @@ public class QuestionRepositoryConstant {
 
 
     public static final Collection<Question> COLLECTION_QUESTIONS
-            = new ArrayList<>(List.of(QUESTION_1, QUESTION_2));
+            = new HashSet<>(Set.of(QUESTION_1, QUESTION_2));
 
     public static final Collection<Question> COLLECTION_QUESTIONS_2
             = new ArrayList<>(List.of(QUESTION_3, QUESTION_4));

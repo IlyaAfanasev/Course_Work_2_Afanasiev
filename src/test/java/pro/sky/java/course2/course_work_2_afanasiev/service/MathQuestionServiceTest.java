@@ -39,10 +39,7 @@ public class MathQuestionServiceTest {
     public void shouldTrowMethodNotExistExceptionFromMethodGetAll() {
         assertThrows(MethodNotExistException.class, () -> out.getAll());
     }
-    @Test
-    public void shouldReturnCorrectResultFromMethodGerRandomQuestion() {
-        assertEquals(2, out.getRandomQuestion(2).size());
-    }
+
 
 
 

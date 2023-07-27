@@ -1,16 +1,8 @@
 package pro.sky.java.course2.course_work_2_afanasiev.service;
 
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptEngine;
-
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.MethodNotAllowedException;
 import pro.sky.java.course2.course_work_2_afanasiev.exceptions.MethodNotExistException;
-import pro.sky.java.course2.course_work_2_afanasiev.exceptions.RequestMoreContentExceptions;
 import pro.sky.java.course2.course_work_2_afanasiev.model.Question;
-import pro.sky.java.course2.course_work_2_afanasiev.repository.QuestionRepository;
 
 import java.util.*;
 
@@ -44,12 +36,12 @@ public class MathQuestionService implements QuestionService {
     }
 
     @Override
-    public Set<Question> getRandomQuestion(int quantity) {
-        Set<Question> returnQuestions = new HashSet<>();
+    public Question getRandomQuestion() {
+
 
         Random random = new Random();
         String[] mathFunctions = {"+", "-", "*", "/"};
-        while (returnQuestions.size() < quantity) {
+
             int a = random.nextInt(100_000);
             int b = random.nextInt(100_000);
             int i = random.nextInt(mathFunctions.length);
@@ -80,13 +72,9 @@ public class MathQuestionService implements QuestionService {
             String[] q = {String.valueOf(a), mathFunction, String.valueOf(b)};
             String questionParam = String.join(" ", q);
             String answer = String.valueOf(answerDouble);
-            Question question = new Question(questionParam, answer);
 
-            returnQuestions.add(question);
 
-        }
-
-        return returnQuestions;
+        return new Question(questionParam, answer);
     }
 
 

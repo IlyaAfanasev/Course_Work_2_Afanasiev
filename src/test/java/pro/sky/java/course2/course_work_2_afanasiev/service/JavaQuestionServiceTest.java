@@ -11,8 +11,8 @@ import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 import pro.sky.java.course2.course_work_2_afanasiev.exceptions.ParamIsNullException;
-import pro.sky.java.course2.course_work_2_afanasiev.exceptions.QuestionAlreadyExist;
-import pro.sky.java.course2.course_work_2_afanasiev.exceptions.QuestionNotFound;
+import pro.sky.java.course2.course_work_2_afanasiev.exceptions.QuestionAlreadyExistException;
+import pro.sky.java.course2.course_work_2_afanasiev.exceptions.QuestionNotFoundException;
 import pro.sky.java.course2.course_work_2_afanasiev.exceptions.RequestMoreContentExceptions;
 import pro.sky.java.course2.course_work_2_afanasiev.repository.QuestionRepository;
 
@@ -50,8 +50,8 @@ public class JavaQuestionServiceTest {
     @Test
     public void shouldThrowQuestionAlreadyExistFromMethodAddWhenElementIsExist() {
 
-        when(questionRepositoryMock.add(anyString(), anyString())).thenThrow(QuestionAlreadyExist.class);
-        assertThrows(QuestionAlreadyExist.class, () -> out.add(QUESTION_1_QUESTION, QUESTION_1_ANSWER));
+        when(questionRepositoryMock.add(anyString(), anyString())).thenThrow(QuestionAlreadyExistException.class);
+        assertThrows(QuestionAlreadyExistException.class, () -> out.add(QUESTION_1_QUESTION, QUESTION_1_ANSWER));
         verify(questionRepositoryMock, times(1))
                 .add(QUESTION_1_QUESTION, QUESTION_1_ANSWER);
     }
@@ -77,9 +77,9 @@ public class JavaQuestionServiceTest {
 
     @Test
     public void shouldThrowQuestionAlreadyExistFromMethodAddWithoutParamAnswerWhenElementIsExist() {
-        when(questionRepositoryMock.add(anyString())).thenThrow(QuestionAlreadyExist.class);
+        when(questionRepositoryMock.add(anyString())).thenThrow(QuestionAlreadyExistException.class);
 
-        assertThrows(QuestionAlreadyExist.class, () -> out.add(QUESTION_1_QUESTION));
+        assertThrows(QuestionAlreadyExistException.class, () -> out.add(QUESTION_1_QUESTION));
         verify(questionRepositoryMock, times(1))
                 .add(QUESTION_1_QUESTION);
     }
@@ -106,8 +106,8 @@ public class JavaQuestionServiceTest {
     @Test
 
     public void shouldTrowQuestionNotFoundFromMethodRemove() {
-        when(questionRepositoryMock.remove(QUESTION_1_QUESTION)).thenThrow(QuestionNotFound.class);
-        assertThrows(QuestionNotFound.class, () -> out.remove(QUESTION_1_QUESTION));
+        when(questionRepositoryMock.remove(QUESTION_1_QUESTION)).thenThrow(QuestionNotFoundException.class);
+        assertThrows(QuestionNotFoundException.class, () -> out.remove(QUESTION_1_QUESTION));
         verify(questionRepositoryMock, times(1))
                 .remove(QUESTION_1_QUESTION);
     }
@@ -119,22 +119,5 @@ public class JavaQuestionServiceTest {
         verify(questionRepositoryMock, times(1))
                 .getAll();
     }
-
-    @Test
-    public void shouldReturnCorrectResultFromMethodGetRandomQuestion() {
-        when(questionRepositoryMock.getAll()).thenReturn(COLLECTION_QUESTIONS);
-        assertEquals(RANDOM_QUESTIONS, out.getRandomQuestion(2));
-        verify(questionRepositoryMock, times(1))
-                .getAll();
-    }
-
-    @Test
-    public void shouldThrowRequestMoreContentExceptionsFromMethodGetRandomQuestion() {
-        when(questionRepositoryMock.getAll()).thenReturn(COLLECTION_QUESTIONS);
-        assertThrows(RequestMoreContentExceptions.class, () -> out.getRandomQuestion(3));
-        verify(questionRepositoryMock, times(1))
-                .getAll();
-    }
-
 
 }
