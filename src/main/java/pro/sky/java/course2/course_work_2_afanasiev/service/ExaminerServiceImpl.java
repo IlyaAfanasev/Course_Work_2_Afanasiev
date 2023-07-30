@@ -1,34 +1,38 @@
 package pro.sky.java.course2.course_work_2_afanasiev.service;
 
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pro.sky.java.course2.course_work_2_afanasiev.exceptions.RequestMoreContentExceptions;
 import pro.sky.java.course2.course_work_2_afanasiev.model.Question;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class ExaminerServiceImpl implements ExaminerService {
 
-    private final List <QuestionService> questionServices;
+    private final List<QuestionService> questionServices;
+    private final Random random;
 
 
-
-    public ExaminerServiceImpl(List <QuestionService> questionServices) {
+    @Autowired
+    public ExaminerServiceImpl(List<QuestionService> questionServices) {
 
 
         this.questionServices = questionServices;
 
+        this.random = new Random();
+    }
+
+    public ExaminerServiceImpl(List<QuestionService> questionServices, Random random) {
+
+        this.questionServices = questionServices;
+
+        this.random = random;
     }
 
     @Override
     public Collection<Question> getQuestions(int amount) {
 
         Set<Question> randomQuestions = new HashSet<>();
-
-        Random random = new Random();
 
         while (randomQuestions.size() < amount) {
 

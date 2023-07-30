@@ -1,7 +1,7 @@
 package pro.sky.java.course2.course_work_2_afanasiev.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pro.sky.java.course2.course_work_2_afanasiev.exceptions.RequestMoreContentExceptions;
 import pro.sky.java.course2.course_work_2_afanasiev.model.Question;
 import pro.sky.java.course2.course_work_2_afanasiev.repository.QuestionRepository;
 
@@ -13,10 +13,20 @@ public class JavaQuestionService implements QuestionService {
 
     private final QuestionRepository questionRepository;
 
+    private final Random random;
 
+
+    @Autowired
     public JavaQuestionService( QuestionRepository questionRepository) {
 
         this.questionRepository = questionRepository;
+        this.random = new Random();
+
+    }
+    public JavaQuestionService( QuestionRepository questionRepository, Random random ) {
+
+        this.questionRepository = questionRepository;
+        this.random = random;
 
     }
     @Override
@@ -42,9 +52,7 @@ public class JavaQuestionService implements QuestionService {
 
     @Override
     public Question getRandomQuestion() {
-        List <Question> questionsCopy = List.of(questionRepository.getAll().toArray(new Question[0]));
-
-        Random random = new Random();
+        List <Question> questionsCopy = new ArrayList<>(questionRepository.getAll());
 
         int i = random.nextInt(questionsCopy.size());
 

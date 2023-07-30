@@ -1,5 +1,6 @@
 package pro.sky.java.course2.course_work_2_afanasiev.service;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -16,18 +17,28 @@ import pro.sky.java.course2.course_work_2_afanasiev.exceptions.QuestionNotFoundE
 import pro.sky.java.course2.course_work_2_afanasiev.exceptions.RequestMoreContentExceptions;
 import pro.sky.java.course2.course_work_2_afanasiev.repository.QuestionRepository;
 
+import java.util.Random;
+
 import static pro.sky.java.course2.course_work_2_afanasiev.constant.QuestionRepositoryConstant.*;
 
 @ExtendWith(MockitoExtension.class)
 public class JavaQuestionServiceTest {
 
-    @Mock
 
     private QuestionRepository questionRepositoryMock;
 
-    @InjectMocks
-
     private JavaQuestionService out;
+
+    private Random random;
+
+    @BeforeEach
+
+    public void init() {
+        questionRepositoryMock = mock(QuestionRepository.class);
+        random = mock(Random.class);
+        out = new JavaQuestionService(questionRepositoryMock, random);
+    }
+
 
     @Test
     public void shouldReturnCorrectResultFromMethodAdd() {
@@ -120,4 +131,13 @@ public class JavaQuestionServiceTest {
                 .getAll();
     }
 
+    @Test
+    public void shouldReturnCorrectResultFromMethodGetRandomQuestion() {
+        when(questionRepositoryMock.getAll()).thenReturn(COLLECTION_ALL_QUESTIONS);
+        when(random.nextInt(anyInt())).thenReturn(1);
+
+
+        assertEquals(QUESTION_2, out.getRandomQuestion());
+        verify(questionRepositoryMock, times(1)).getAll();
+    }
 }
